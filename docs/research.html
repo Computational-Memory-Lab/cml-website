@@ -188,6 +188,13 @@ Released   : 20100403
     } else {
         setTheme('light');
     }
+
+    // Enable transitions after initial paint
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            root.setAttribute('data-theme-ready', 'true');
+        });
+    });
 </script>
 </body>
 </html>

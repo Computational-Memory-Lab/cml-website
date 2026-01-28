@@ -48,7 +48,12 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+html:not([data-theme-ready]) *,
+html:not([data-theme-ready]) *::before,
+html:not([data-theme-ready]) *::after {
+  transition: none !important;
 }
 
 body {
@@ -84,7 +89,7 @@ body {
     no-repeat, /* For gradient 2 */
     no-repeat; /* For SVG: prevent tiling */
 
-  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   filter: brightness(1.0);
   position: relative;
 }
@@ -103,7 +108,7 @@ body:before {
   opacity: 0;
   pointer-events: none;
   z-index: 0;
-  transition: opacity 0.3s ease;
+  transition: none;
 }
 
 /* Show overlay in light mode to fade theta waves */

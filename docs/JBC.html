@@ -179,6 +179,13 @@ T6G 2E9, Canada <br>
     } else {
         setTheme('light');
     }
+
+    // Enable transitions after initial paint
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            root.setAttribute('data-theme-ready', 'true');
+        });
+    });
 </script>
 </body>
 </html>

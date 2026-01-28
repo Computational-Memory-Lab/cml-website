@@ -965,6 +965,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	} else {
 		setTheme('light');
 	}
+
+	// Enable transitions after initial paint
+	requestAnimationFrame(function() {
+		requestAnimationFrame(function() {
+			root.setAttribute('data-theme-ready', 'true');
+		});
+	});
 </script>
 </body>
 </html>

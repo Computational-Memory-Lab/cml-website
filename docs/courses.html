@@ -321,6 +321,13 @@ Check out the <a href="http://www.ualberta.ca/~acn/">Alberta Cognitive Neuroscie
     } else {
         setTheme('light');
     }
+
+    // Enable transitions after initial paint
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            root.setAttribute('data-theme-ready', 'true');
+        });
+    });
 </script>
 </body>
 </html>

@@ -255,7 +255,7 @@
               <li><a href="team.html#amir-shafaghat">Amir Shafaghat</a></li>
               <li><a href="team.html#tamari-shalamberidze">Tamari Shalamberidze</a></li>
               <li><a href="team.html#sergio-barra">Sergio Barra</a></li>
-              <li><a href="team.html#muhammad-khan">Muhammad Khan</a></li>
+              <li><a href="team.html#muhammad-khan">Muhammad Bilal Khan</a></li>
               <li><a href="team.html#ayaan-jutt">Ayaan Jutt</a></li>
               <li><a href="team.html#madhvi-sharma">Madhvi Sharma</a></li>
               <li><a href="team.html#gaurav-bansal">Gaurav Bansal</a></li>
@@ -324,6 +324,13 @@
     } else {
         setTheme('light');
     }
+
+    // Enable transitions after initial paint
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            root.setAttribute('data-theme-ready', 'true');
+        });
+    });
   </script>
 </body>
 </html>

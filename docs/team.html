@@ -151,7 +151,7 @@ Released   : 20100403
 							</h4>
 							<p>
 					"My name is Ayaan Jutt, an I am currently researching whether or 
-					not sleep can retroactively fix the issues of associative interference"
+					not sleep can retroactively fix the issues of associative interference."
 							</p>
 							<p><a href="mailto:ajutt@ualberta.ca?" target="_top">ajutt@ualberta.ca</a></p>
 						</div>
@@ -165,10 +165,7 @@ Released   : 20100403
 							Winter 2023 - present
 							</h4>
 							<p>
-					"My name is Bilal and I am currently researching 
-					how people judge the relative order
-					of two items in a list, and the potential
-					influences of item similarity on the task"
+					"Hi everyone, my name is Bilal, and my research mainly focuses on testing performance on the Judgments of Spacing (JOS) task, one of several tasks used to study human order memory."
 							</p>
 							<p><a href="mailto:mbkhan@ualberta.ca?" target="_top">mbkhan@ualberta.ca</a></p>
 						</div>
@@ -691,6 +688,13 @@ Released   : 20100403
     } else {
         setTheme('light');
     }
+
+    // Enable transitions after initial paint
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            root.setAttribute('data-theme-ready', 'true');
+        });
+    });
 </script>
 </body>
 </html>
