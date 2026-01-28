@@ -785,16 +785,11 @@ p[style*="color:red"] {
   }
 
   #search {
-    width: 100%;
-    display: flex !important;
-    justify-content: center;
+    display: none !important;
   }
 
   #theme-toggle {
-    padding: 12px 18px;
-    font-size: 1em;
-    min-height: 44px;
-    border-radius: 10px;
+    display: none;
   }
 
   #logo {
@@ -874,8 +869,8 @@ p[style*="color:red"] {
   }
 
   .post .team-member-grid img {
-    aspect-ratio: auto;
-    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     height: auto;
   }
 
@@ -891,6 +886,10 @@ p[style*="color:red"] {
 
   #page .post .entry ul {
     padding-left: 22px;
+  }
+
+  #sidebar .sidebar-team-list {
+    display: none;
   }
 
   #footer {
