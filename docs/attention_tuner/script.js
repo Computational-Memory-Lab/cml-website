@@ -1,4 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const themeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    let chartInstance = null;
+    let chartData = null;
+
+    function getTheme() {
+        return document.body.dataset.theme || (themeQuery.matches ? 'dark' : 'light');
+    }
+
+    function getChartOptions(theme) {
+        const isLight = theme === 'light';
+        const textColor = isLight ? '#2c3e50' : '#e1e8ed';
+        const gridColor = isLight ? '#e0e6ed' : '#3a4254';
+
+        return {
+            backgroundColor: isLight ? '#ffffff' : '#1A1F2E',
+            vAxis: {
+                title: 'Accuracy (%)',
+                viewWindow: { min: 0, max: 100 },
+                textStyle: { color: textColor },
+                titleTextStyle: { color: textColor },
+                gridlines: { color: gridColor }
+            },
+            hAxis: {
+                title: '',
+                textStyle: { color: textColor },
+                titleTextStyle: { color: textColor }
+            },
+            legend: { position: 'bottom', textStyle: { color: textColor, fontSize: 10 } },
+            seriesType: 'bars',
+            colors: ['#5b8fd9', '#00d68f', '#F14709', '#F14709'],
+            bar: { groupWidth: '75%' },
+            series: {
+                0: { type: 'bars' }, // Strong Pure
+                1: { type: 'bars' }, // Weak Pure
+                2: { type: 'bars' }, // Mixed Strong
+                3: { type: 'bars' }  // Mixed Weak
+            },
+            height: 400,
+            width: 700
+        };
+    }
+
+    function redrawChartForTheme() {
+        if (!chartInstance || !chartData) {
+            return;
+        }
+        chartInstance.draw(chartData, getChartOptions(getTheme()));
+    }
+
+    const themeObserver = new MutationObserver(redrawChartForTheme);
+    themeObserver.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
+    if (typeof themeQuery.addEventListener === 'function') {
+        themeQuery.addEventListener('change', redrawChartForTheme);
+    } else if (typeof themeQuery.addListener === 'function') {
+        themeQuery.addListener(redrawChartForTheme);
+    }
+
     const words = [
         "ABSENCE",
         "ACCORD",
@@ -792,26 +849,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 ['Accuracy', strong_pure_accuracy, weak_pure_accuracy, strong_mixed_accuracy, weak_mixed_accuracy]
             ]);
 
-            const options = {
-                backgroundColor: '#1A1F2E',
-                vAxis: { title: 'Accuracy (%)', viewWindow: { min: 0, max: 100 }, textStyle: { color: '#e1e8ed' }, titleTextStyle: { color: '#e1e8ed' } },
-                hAxis: { title: '', textStyle: { color: '#e1e8ed' }, titleTextStyle: { color: '#e1e8ed' } },
-                legend: { position: 'bottom', textStyle: { color: '#e1e8ed', fontSize: 10 } },
-                seriesType: 'bars',
-                colors: ['#5b8fd9', '#00d68f', '#F14709', '#F14709'],
-                bar: { groupWidth: '75%' }, // Adjust group width
-                series: {
-                    0: { type: 'bars' }, // Strong Pure
-                    1: { type: 'bars' }, // Weak Pure
-                    2: { type: 'bars' }, // Mixed Strong
-                    3: { type: 'bars' }  // Mixed Weak
-                },
-                height: 400,
-                width: 700
-            };
-
-            const chart = new google.visualization.ComboChart(resultsChart);
-            chart.draw(data, options);
+            chartData = data;
+            if (!chartInstance) {
+                chartInstance = new google.visualization.ComboChart(resultsChart);
+            }
+            chartInstance.draw(chartData, getChartOptions(getTheme()));
         }
 
         resultsExplanation.textContent = 'Notice anything strange? You were likely more accurate at recognizing \'strong\' words when they were in a list with other strong words (pure list) than when they were mixed with weak words. This is the inverted list-strength effect! It happens because when your brain expects only deep, meaningful information, it narrows its focus. When it expects a mix of shallow and deep information, it widens its focus, making it harder to pinpoint the specific deep features of the strong words.';

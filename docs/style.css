@@ -89,7 +89,29 @@ body {
 
 
 
+/* Overlay to fade theta waves in light mode */
 body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--bg-light);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show overlay in light mode to fade theta waves */
+body[data-theme="light"]::before,
+html[data-theme="light"] body::before {
+  opacity: 0.7;
+}
+
+/* Grainy noise layer above overlay */
+body:after {
   content: "";
   position: fixed;
   top: 0;
@@ -101,9 +123,24 @@ body:before {
   background-size: 300px 300px;
   opacity: 0.1;
   pointer-events: none;
-  z-index: -1;
+  z-index: 1;
   mix-blend-mode: overlay;
   animation: grain 8s steps(10) infinite;
+}
+
+/* Boost grain visibility in light mode only */
+body[data-theme="light"]::after,
+html[data-theme="light"] body::after {
+  opacity: 0.2;
+  mix-blend-mode: multiply;
+}
+
+/* Ensure content is above the overlay and noise */
+#header-wrapper,
+#logo,
+#page {
+  position: relative;
+  z-index: 2;
 }
 
 
@@ -274,7 +311,7 @@ a:hover {
 
 #menu a:hover:before {
   width: 80%;
-  background: #E1E8EC;
+  background: var(--text-dark);
 }
 
 /* Fix for current page indicator - only apply to actual current page */
@@ -303,7 +340,7 @@ body.page-courses #menu li:nth-child(4) a:before,
 body.page-team #menu li:nth-child(5) a:before,
 body.page-contact #menu li:nth-child(6) a:before {
   width: 80%;
-  background: #E1E8EC;
+  background: var(--text-dark);
 }
 
 /* Remove search section completely */
@@ -623,6 +660,13 @@ p[style*="color:red"] {
   color: #ffeaa7 !important;
   font-weight: 500;
   margin: 20px 0;
+}
+
+/* Light theme override for prerequisites */
+[data-theme="light"] p[style*="color:red"] {
+  background: linear-gradient(120deg, rgba(253, 203, 110, 0.3) 0%, rgba(251, 166, 45, 0.3) 100%);
+  border-left: 4px solid #d68910;
+  color: #9c6500 !important;
 }
 
 /* Animations */
